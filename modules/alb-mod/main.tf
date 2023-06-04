@@ -1,7 +1,7 @@
 resource "aws_lb" "main" {
   name               = var.load_balancer_name
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.main.id]
+  security_groups    = var.security_group_ids
   subnets            = var.subnet_ids
 
   tags = {
@@ -49,8 +49,9 @@ resource "aws_lb_listener_rule" "http_redirect" {
   }
 
   condition {
-    host_header {
-      values = ["*"]
+    http_header {
+      http_header_name = "X-Forwarded-For"
+      values           = ["192.168.1.*"]
     }
   }
 }

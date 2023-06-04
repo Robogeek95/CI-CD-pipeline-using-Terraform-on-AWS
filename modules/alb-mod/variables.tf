@@ -23,3 +23,8 @@ variable "health_check_path" {
   type        = string
   default     = "/"
 }
+
+variable "security_group_ids" {
+  description = "ID of the security group"
+  type        = list(string)
+}

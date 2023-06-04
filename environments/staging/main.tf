@@ -39,13 +39,12 @@ module "database" {
   private_subnet_ids     = module.vpc.private_subnet_ids
 }
 
-/*
-
 module "load_balancer" {
   source             = "../../modules/alb-mod"
-  load_balancer_name = "prospa_app-load-balancer"
-  subnet_ids         = [aws_subnet.public.id]
-  target_group_name  = "prospa_app-target-group"
-  vpc_id             = aws_vpc.main.id
+  load_balancer_name = "prospa-app-load-balancer"
+  subnet_ids         = module.vpc.public_subnet_ids
+  target_group_name  = "prospa-app-target-group"
+  vpc_id             = module.vpc.vpc_id
+  security_group_ids = [module.vpc.public_security_group_id]
   health_check_path  = "/health"
-} */
+}
