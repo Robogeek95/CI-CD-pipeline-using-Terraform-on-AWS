@@ -54,7 +54,7 @@ resource "aws_codepipeline" "main" {
       owner           = "AWS"
       provider        = "ECS"
       version         = "1"
-      input_artifacts = ["source_out"]
+      input_artifacts = ["build_out"]
 
       configuration = {
         ClusterName = module.ecs_frontend_app.ecs_cluster_name
@@ -284,7 +284,30 @@ resource "aws_iam_policy" "codebuild_policy" {
 			],
 			"Effect": "Allow",
 			"Resource": "*"
-		}
+		},
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:PutObject",
+        "s3:PutObjectAcl",
+        "s3:*"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.pipeline_artifacts.arn}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:*"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.pipeline_artifacts.arn}"
+      ]
+    }
 	],
 	"Version": "2012-10-17"
 }
