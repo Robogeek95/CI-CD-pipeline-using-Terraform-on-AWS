@@ -27,9 +27,9 @@ resource "aws_lb_target_group" "main" {
   vpc_id      = var.vpc_id
   target_type = "ip"
 
-  health_check {
+  /* health_check {
     path = var.health_check_path
-  }
+  } */
 
   tags = {
     Name = var.target_group_name

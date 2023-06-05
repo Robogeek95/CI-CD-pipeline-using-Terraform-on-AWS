@@ -36,9 +36,10 @@ variable "host_port" {
   default     = 0
 }
 
-variable "log_group_name" {
-  description = "Name of the CloudWatch Logs group"
-  type        = string
+variable "log_retention_in_days" {
+  description = "Number of days the logs will be retained in CloudWatch."
+  default     = 30
+  type        = number
 }
 
 variable "desired_count" {

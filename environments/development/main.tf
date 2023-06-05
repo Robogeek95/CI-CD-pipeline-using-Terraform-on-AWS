@@ -11,20 +11,20 @@ module "vpc" {
 module "ecs_frontend_app" {
   source = "../../modules/ecs-mod"
 
-  cluster_name           = "ecs_frontend_app"
-  task_definition_family = "ecs_frontend_app-definition"
+  cluster_name           = "prospa_frontend_app"
+  task_definition_family = "prospa_frontend_app-definition"
   task_cpu               = 256
   task_memory            = 512
-  container_image        = "ecs_frontend_app:latest"
+  container_image        = "570176851856.dkr.ecr.us-west-2.amazonaws.com/prospa-app-ecr-repo:latest"
   container_port         = 80
   host_port              = 80
-  log_group_name         = "/ecs/ecs_frontend_app-logs"
   desired_count          = 2
   health_check_path      = "/health"
   vpc_id                 = module.vpc.vpc_id
   subnet_id              = module.vpc.public_subnet_ids[0]
   security_id            = module.vpc.public_security_group_id
   lb_target_group_arn    = module.load_balancer.target_group_arn
+  log_retention_in_days  = 30
 }
 
 /* module "database" {

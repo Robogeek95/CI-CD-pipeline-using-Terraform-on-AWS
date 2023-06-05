@@ -4,52 +4,31 @@ resource "aws_ecs_cluster" "ecs" {
 
 resource "aws_ecs_task_definition" "ecs" {
   family                   = var.task_definition_family
-  execution_role_arn       = aws_iam_role.task_execution_role.arn
+  execution_role_arn       = aws_iam_role.execution.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.task_cpu
   memory                   = var.task_memory
+  task_role_arn            = aws_iam_role.task.arn
 
-  container_definitions = <<DEFINITION
+  container_definitions    = <<DEFINITION
 [
   {
     "name": "app",
     "image": "${var.container_image}",
+    "cpu": ${var.task_cpu},
+    "memory": ${var.task_memory},
+    "essential": true,
     "portMappings": [
       {
         "containerPort": ${var.container_port},
-        "hostPort": ${var.host_port}
+        "hostPort": ${var.host_port},
+        "protocol": "HTTP"
       }
-    ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-region": "${var.region}",
-        "awslogs-group": "${var.log_group_name}",
-        "awslogs-stream-prefix": "${var.cluster_name}"
-      }
-    }
+    ]
   }
 ]
 DEFINITION
-}
-
-resource "aws_iam_role" "task_execution_role" {
-  name               = "ecs-task-execution-role"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ecs-tasks.amazonaws.com"
-      },
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
 }
 
 resource "aws_ecs_service" "ecs" {
@@ -61,11 +40,11 @@ resource "aws_ecs_service" "ecs" {
   network_configuration {
     security_groups  = [var.security_id]
     subnets          = [var.subnet_id]
-    assign_public_ip = false
+    assign_public_ip = true
   }
 
   load_balancer {
-    target_group_arn =var.lb_target_group_arn
+    target_group_arn = var.lb_target_group_arn
     container_name   = "app"
     container_port   = var.container_port
   }
@@ -78,4 +57,11 @@ resource "aws_ecr_repository" "prospa-app_repository" {
   image_scanning_configuration {
     scan_on_push = true
   }
+}
+
+resource "aws_cloudwatch_log_group" "main" {
+  name = var.cluster_name
+
+  retention_in_days = var.log_retention_in_days
+  /* kms_key_id        = var.logs_kms_key */
 }
