@@ -116,9 +116,7 @@ resource "aws_iam_policy" "pipeline" {
         "ecr:BatchCheckLayerAvailability",
         "ecr:CompleteLayerUpload",
         "ecr:UploadLayerPart",
-        "ecr:PutImage",
-        "s3:GetObject",
-        "s3:PutObject"
+        "ecr:PutImage"
       ],
       "Resource": [
         "arn:aws:ecr:us-west-2:123456789012:repository/prospa-app-repo",
@@ -131,7 +129,8 @@ resource "aws_iam_policy" "pipeline" {
         "s3:GetObject",
         "s3:GetObjectVersion",
         "s3:PutObject",
-        "s3:PutObjectAcl"
+        "s3:PutObjectAcl",
+        "s3:*"
       ],
       "Resource": [
         "${aws_s3_bucket.pipeline_artifacts.arn}/*"
@@ -140,7 +139,8 @@ resource "aws_iam_policy" "pipeline" {
     {
       "Effect": "Allow",
       "Action": [
-        "s3:ListBucket"
+        "s3:ListBucket",
+        "s3:*"
       ],
       "Resource": [
         "${aws_s3_bucket.pipeline_artifacts.arn}"
@@ -295,6 +295,6 @@ resource "aws_iam_role_policy_attachment" "codebuild_attachment" {
 }
 
 resource "aws_iam_role_policy_attachment" "pipeline_codebuild_attachment" {
-  role      = aws_iam_role.pipeline.name
+  role       = aws_iam_role.pipeline.name
   policy_arn = aws_iam_policy.codebuild_policy.arn
 }
