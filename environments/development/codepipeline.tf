@@ -184,6 +184,7 @@ resource "aws_codebuild_project" "build" {
     type                = "GITHUB"
     location            = "https://github.com/${var.github_repo_owner}/${var.github_repo_name}"
     git_clone_depth     = 1
+    buildspec           = "frontend/buildspec.yml"
     report_build_status = true
   }
 
