@@ -36,6 +36,8 @@ phases:
     - echo Writing image definitions file...
     - printf '{"ImageURI":"%s"}' ${REPOSITORY_URI}:$IMAGE_TAG > imagedefinitions.json
     - cat imagedefinitions.json
+    - ls
+    - pwd
 artifacts:
   files:
   - imagedefinitions.json
