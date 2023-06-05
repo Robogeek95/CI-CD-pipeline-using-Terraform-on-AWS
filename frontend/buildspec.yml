@@ -9,7 +9,7 @@ phases:
     - AWS_ACCOUNT_ID=570176851856
     - AWS_REGION=us-west-2
     - REPOSITORY_NAME=prospa-app-ecr-repo
-    - Logging in to Amazon ECR....
+    - echo Logging in to Amazon ECR....
     - aws --version
     # update the following line with your own region
     - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
