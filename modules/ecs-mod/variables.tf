@@ -71,5 +71,11 @@ variable "region" {
 
 variable "security_id" {
   description = "Security Group ID to attach to ecs instance"
-  type = string
+  type        = string
+}
+
+variable "ecr_name" {
+  description = "Name of the ECR"
+  type        = string
+  default     = "prospa-app-ecr-repo"
 }

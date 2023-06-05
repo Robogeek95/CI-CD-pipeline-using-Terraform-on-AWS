@@ -84,3 +84,12 @@ resource "aws_ecs_service" "ecs" {
     protocol = "HTTP"
   }
 } */
+
+resource "aws_ecr_repository" "prospa-app_repository" {
+  name                 = var.ecr_name
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}

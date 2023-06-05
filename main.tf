@@ -1,8 +1,8 @@
-module "development" {
+/* module "development" {
   source = "./environments/development"
 }
 
-/* module "staging" {
+module "staging" {
   source = "./environments/staging"
 }
 
