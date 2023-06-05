@@ -37,5 +37,5 @@ phases:
 artifacts:
   files:
   - imageDetail.json
-Enable privileged mode.. this is to enable docker runtime
+# Enable privileged mode.. this is to enable docker runtime
 privilege-mode: true
