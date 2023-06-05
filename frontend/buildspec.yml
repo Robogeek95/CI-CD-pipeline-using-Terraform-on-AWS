@@ -34,8 +34,8 @@ phases:
     - docker push ${REPOSITORY_URI}:$IMAGE_TAG
     - echo Writing image definitions file...
     - printf '{"ImageURI":"%s"}' ${REPOSITORY_URI}:$IMAGE_TAG > imageDetail.json
-artifacts:
-  files:
-  - imageDetail.json
+# artifacts:
+#   files:
+#   - imageDetail.json
 # Enable privileged mode.. this is to enable docker runtime
 privilege-mode: true
