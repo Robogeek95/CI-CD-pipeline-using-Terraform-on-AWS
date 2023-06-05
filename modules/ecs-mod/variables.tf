@@ -79,3 +79,8 @@ variable "ecr_name" {
   type        = string
   default     = "prospa-app-ecr-repo"
 }
+
+variable "lb_target_group_arn" {
+  description = "Loadbalancer target group arn"
+  type        = string
+}

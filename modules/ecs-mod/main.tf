@@ -64,26 +64,12 @@ resource "aws_ecs_service" "ecs" {
     assign_public_ip = false
   }
 
-  /* load_balancer {
-    target_group_arn = aws_lb_target_group.ecs.arn
+  load_balancer {
+    target_group_arn =var.lb_target_group_arn
     container_name   = "app"
     container_port   = var.container_port
-  } */
-}
-
-/* resource "aws_lb_target_group" "ecs" {
-  name        = var.target_group_name
-  port        = var.container_port
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = var.vpc_id
-
-  health_check {
-    path     = var.health_check_path
-    port     = var.container_port
-    protocol = "HTTP"
   }
-} */
+}
 
 resource "aws_ecr_repository" "prospa-app_repository" {
   name                 = var.ecr_name
