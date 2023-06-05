@@ -26,7 +26,7 @@ module "ecs_frontend_app" {
   security_id            = module.vpc.public_security_group_id
 }
 
-module "database" {
+/* module "database" {
   source = "../../modules/rds-mod"
 
   subnet_group_name      = "prospa-app-db-subnet-group"
@@ -37,7 +37,7 @@ module "database" {
   db_password            = "password123"
   security_group_id      = module.vpc.private_security_group_id
   private_subnet_ids     = module.vpc.private_subnet_ids
-}
+} */
 
 module "load_balancer" {
   source             = "../../modules/alb-mod"
