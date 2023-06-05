@@ -16,7 +16,7 @@ resource "aws_codepipeline" "main" {
       owner            = "ThirdParty"
       provider         = "GitHub"
       version          = "1"
-      output_artifacts = ["source_output"]
+      output_artifacts = ["source_out"]
 
       configuration = {
         Owner      = var.github_repo_owner
@@ -36,8 +36,8 @@ resource "aws_codepipeline" "main" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      input_artifacts  = ["source_output"]
-      output_artifacts = ["build_output"]
+      input_artifacts  = ["source_out"]
+      output_artifacts = ["build_out"]
 
       configuration = {
         ProjectName = aws_codebuild_project.build.name
@@ -54,7 +54,7 @@ resource "aws_codepipeline" "main" {
       owner           = "AWS"
       provider        = "ECS"
       version         = "1"
-      input_artifacts = ["build_output"]
+      input_artifacts = ["build_out"]
 
       configuration = {
         ClusterName = module.ecs_frontend_app.ecs_cluster_name
@@ -253,7 +253,8 @@ resource "aws_iam_policy" "codebuild_policy" {
 		},
 		{
 			"Action": [
-				"ecr:*"
+				"ecr:GetAuthorizationToken",
+        "ecr:*"
 			],
 			"Effect": "Allow",
 			"Resource": "*"
@@ -278,7 +279,8 @@ resource "aws_iam_policy" "codebuild_policy" {
 				"logs:CreateLogStream",
 				"logs:GetLogRecord",
 				"logs:GetLogEvents",
-				"logs:DescribeLogGroups"
+				"logs:DescribeLogGroups",
+				"logs:PutLogEvents"
 			],
 			"Effect": "Allow",
 			"Resource": "*"
