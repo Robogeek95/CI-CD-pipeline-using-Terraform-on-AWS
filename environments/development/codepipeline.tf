@@ -54,7 +54,7 @@ resource "aws_codepipeline" "main" {
       owner           = "AWS"
       provider        = "ECS"
       version         = "1"
-      input_artifacts = ["build_out"]
+      input_artifacts = ["source_out"]
 
       configuration = {
         ClusterName = module.ecs_frontend_app.ecs_cluster_name
