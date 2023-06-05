@@ -119,8 +119,8 @@ resource "aws_iam_policy" "pipeline" {
         "ecr:PutImage"
       ],
       "Resource": [
-        "arn:aws:ecr:us-west-2:123456789012:repository/prospa-app-repo",
-        "arn:aws:s3:::prospa-app-bucket/*"
+        "${module.ecs_frontend_app.ecr_arn}/:repository/prospa-app-repo",
+       "${aws_s3_bucket.pipeline_artifacts.arn}/*"
       ]
     },
     {
@@ -248,7 +248,7 @@ resource "aws_iam_policy" "codebuild_policy" {
 			],
 			"Effect": "Allow",
 			"Resource": [
-				"arn:aws:s3:::prospa-app-pipeline-artifacts/*"
+				 "${aws_s3_bucket.pipeline_artifacts.arn}/*"
 			]
 		},
 		{
