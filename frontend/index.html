@@ -40,8 +40,8 @@
       <h3>Virtual Private Cloud (VPC)</h3>
       <p>
         The Virtual Private Cloud (VPC) is a logically isolated section of the
-        AWS cloud where you can provision resources. It provides a private
-        network environment for your infrastructure. The VPC is divided into
+        AWS cloud where i can provisioned resources. It provides a private
+        network environment for the infrastructure. The VPC is divided into
         public and private subnets, allowing for segregation of resources based
         on their accessibility.
       </p>
@@ -106,8 +106,8 @@
         <li>
           <bold>Test Stage</bold>: After the build stage, you can include
           additional steps to run tests, ensuring the application meets quality
-          and functionality requirements. This stage is customizable based on
-          your testing needs.
+          and functionality requirements. But i didn't make use of tests in this
+          application.
         </li>
         <bold>Deploy Stage</bold
         >: CodePipeline deploys the application to the ECS service. It creates a
@@ -121,11 +121,12 @@
       </ol>
 
       <dev>
-        <h3>Provisioning Infrastructure with Terraform</h3>
+        <h3>Provisioning Infrastructure</h3>
 
         <p>
-          To provision the infrastructure with Terraform, you flilow these
-          steps:
+          Infrastucture as code has been setup to deploy the entire
+          infrastructure using Terraform it is also used to setup CodePipeline.
+          Automating the entire process. To provision the infrastructure, you flilow these steps:
         </p>
 
         <li>Install Terraform on your local machine.</li>
@@ -179,8 +180,7 @@
 
         <ol>
           <li>
-            Developers push code changes to the configured repository (Bitbucket
-            or GitHub).
+            Developers push code changes to the configured repository Github.
           </li>
 
           <li>CodePipeline detects the changes and triggers the pipeline.</li>
