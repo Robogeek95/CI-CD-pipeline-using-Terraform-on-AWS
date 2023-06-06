@@ -1,15 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Proapa APP Deployes :)</title>
-</head>
-<body>
+  </head>
 
-    <h1>Heyyo, if you're seeing this the app has been deployed</h1>
-    <h2>Thank you</h2>
-    <h3>for Prospa</h3>
-</body>
+  <style>
+    body {
+      background-color: rgb(242, 254, 255);
+    }
+    article {
+      max-width: 60%;
+      margin: 80px auto;
+    }
+  </style>
+
+  <body>
+    <article>
+      <h1>Heyyo :)</h1>
+      <h2>Are you interested in knowing how you got here?</h2>
+      <h3>
+        Enjoy a dive into a detailed explanation of the infrastructure, its
+        provisioning with Terraform, and the usage of CodePipeline for
+        continuous deployment.
+      </h3>
+      <h3>Infrastructure Overview</h3>
+      <img
+        src="https://i.imgur.com/hE6GKJ4.jpeg"
+        width="800px"
+        height="900px"
+      />
+      <p>
+        The infrastructure is deployed on AWS and consists of various components
+        working together to host and deploy the application.
+      </p>
+
+      <h3>Virtual Private Cloud (VPC)</h3>
+      <p>
+        The Virtual Private Cloud (VPC) is a logically isolated section of the
+        AWS cloud where you can provision resources. It provides a private
+        network environment for your infrastructure. The VPC is divided into
+        public and private subnets, allowing for segregation of resources based
+        on their accessibility.
+      </p>
+
+      <h3>Load Balancers</h3>
+      <p>
+        The architecture includes Application Load Balancers (ALBs) that
+        distribute incoming traffic across multiple EC2 instances or containers.
+        ALBs help improve scalability, availability, and security. They support
+        SSL/TLS certificates for secure communication and can be integrated with
+        AWS Web Application Firewall (WAF) to protect against common web
+        attacks.
+      </p>
+
+      <h3>ECS and EKS</h3>
+      <p>
+        The Web App and Mobile App components can be deployed using Elastic
+        Container Service (ECS) or Elastic Kubernetes Service (EKS). These
+        services provide container orchestration and management, allowing you to
+        run and scale containerized applications. ECS and EKS ensure high
+        availability, scalability, and ease of deployment.
+      </p>
+
+      <h3>Backend App and Database</h3>
+      <p>
+        The Backend App is hosted in a private subnet within the VPC. It can be
+        deployed on EC2 instances or containerized using ECS or EKS, similar to
+        the Web App and Mobile App. The database component uses Amazon RDS for
+        MySQL v8, a managed database service. RDS provides automated backups,
+        scaling, and monitoring, ensuring privacy and security.
+      </p>
+
+      <h3>Terraform for Infrastructure as Code (IaC)</h3>
+      <p>
+        Terraform is used for Infrastructure as Code (IaC) to provision and
+        manage the AWS resources. Terraform configuration files (`*.tf`) define
+        the desired state of the infrastructure. By running `terraform apply`,
+        the configuration is applied, and the resources are provisioned on AWS.
+        The modular structure of the Terraform code promotes reusability and
+        maintainability.
+      </p>
+
+      <h3>Continuous Deployment with CodePipeline</h3>
+      <p>
+        The CI/CD pipeline is implemented using AWS CodePipeline. CodePipeline
+        automates the build, test, and deployment process based on changes in
+        the source repository. Here's an overview of how it works:
+      </p>
+
+      <ol>
+        <li>
+          <bold>Source Stage</bold>: CodePipeline monitors the configured
+          repository (Bitbucket or GitHub) for changes. When a new commit is
+          detected, it triggers the pipeline.
+        </li>
+        <li>
+          <bold>Build Stage</bold>: CodePipeline uses AWS CodeBuild to build the
+          application. CodeBuild reads the build specification file
+          (`buildspec.yml`) to define the build steps, environment, and
+          artifacts. It can package the application into Docker containers.
+        </li>
+        <li>
+          <bold>Test Stage</bold>: After the build stage, you can include
+          additional steps to run tests, ensuring the application meets quality
+          and functionality requirements. This stage is customizable based on
+          your testing needs.
+        </li>
+        <bold>Deploy Stage</bold
+        >: CodePipeline deploys the application to the ECS service. It creates a
+        new task definition using the Docker image from the build stage and
+        deploys it to the ECS cluster.
+        <li>
+          <bold>Post-Deployment Actions</bold>: CodePipeline can trigger
+          additional actions after the deployment, such as running integration
+          tests, sending notifications, or invoking other AWS services.
+        </li>
+      </ol>
+
+      <dev>
+        <h3>Provisioning Infrastructure with Terraform</h3>
+
+        <p>
+          To provision the infrastructure with Terraform, you flilow these
+          steps:
+        </p>
+
+        <li>Install Terraform on your local machine.</li>
+
+        <li>
+          Define the desired infrastructure in Terraform configuration files
+          (`*.tf`). This includes resources such as VPC, subnets, security
+          groups, ALBs, ECS services, RDS instances, etc. Use modules to promote
+          reusability.
+        </li>
+
+        <li>
+          Set up the necessary variables in the `variables.tf` file or through
+          environment variables to customize the infrastructure according to
+          your requirements.
+        </li>
+      </dev>
+
+      <dev>
+        <h3>Provision infrastructure</h3>
+        <p>
+          Next, you perform the following steps to provision the infrastructure
+        </p>
+        <li>Run `terraform init` to initialize the Terraform configuration.</li>
+
+        <li>
+          Run `terraform plan` to preview the changes that Terraform will make
+          to the infrastructure based on your configuration.
+        </li>
+
+        <li>
+          Run `terraform apply` to provision the infrastructure on AWS.
+          Terraform will create the defined resources and configure them based
+          on the provided specifications.
+        </li>
+
+        <li>
+          Monitor the Terraform output to track the progress and obtain
+          information about the provisioned resources, such as URLs, endpoints,
+          and security group IDs.
+        </li>
+      </dev>
+
+      <dev>
+        <h3>Deployment Workflow</h3>
+
+        <p>
+          Once the infrastructure is provisioned, the deployment workflow is as
+          flilows:
+        </p>
+
+        <ol>
+          <li>
+            Developers push code changes to the configured repository (Bitbucket
+            or GitHub).
+          </li>
+
+          <li>CodePipeline detects the changes and triggers the pipeline.</li>
+
+          <li>
+            CodePipeline runs the build stage, where CodeBuild builds the
+            application and packages it into Docker containers.
+          </li>
+
+          <li>
+            After successful building, CodePipeline proceeds to the deploy
+            stage, where it deploys the application to the ECS service.
+          </li>
+
+          <li>
+            The ECS service creates a new task definition using the Docker image
+            from the build stage and deploys it to the ECS cluster.
+          </li>
+
+          <li>
+            The ALB directs incoming traffic to the deployed application,
+            providing scalability and high availability.
+          </li>
+
+          <li>
+            Post-deployment actions can be triggered, such as running
+            integration tests, sending notifications, or invoking other AWS
+            services.
+          </li>
+        </ol>
+      </dev>
+    </article>
+  </body>
 </html>
