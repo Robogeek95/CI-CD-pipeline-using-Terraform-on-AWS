@@ -59,9 +59,9 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "subnet_id" {
-  description = "ID of the private subnet"
-  type        = string
+variable "subnet_ids" {
+  description = "IDs of the private subnet"
+  type        = list(string)
 }
 
 variable "region" {
@@ -70,9 +70,9 @@ variable "region" {
   default     = "us-west"
 }
 
-variable "security_id" {
-  description = "Security Group ID to attach to ecs instance"
-  type        = string
+variable "security_ids" {
+  description = "Security Group IDs to attach to ecs instance"
+  type        = list(string)
 }
 
 variable "ecr_name" {

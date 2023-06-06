@@ -18,11 +18,11 @@ module "ecs_frontend_app" {
   container_image        = "570176851856.dkr.ecr.us-west-2.amazonaws.com/prospa-app-ecr-repo:latest"
   container_port         = 80
   host_port              = 80
-  desired_count          = 2
-  health_check_path      = "/health"
+  desired_count          = 3
+  health_check_path      = "/"
   vpc_id                 = module.vpc.vpc_id
-  subnet_id              = module.vpc.public_subnet_ids[0]
-  security_id            = module.vpc.public_security_group_id
+  subnet_ids             = module.vpc.public_subnet_ids
+  security_ids           = [module.vpc.public_security_group_id]
   lb_target_group_arn    = module.load_balancer.target_group_arn
   log_retention_in_days  = 30
 }
@@ -47,5 +47,5 @@ module "load_balancer" {
   target_group_name  = "prospa-app-target-group"
   vpc_id             = module.vpc.vpc_id
   security_group_ids = [module.vpc.public_security_group_id]
-  health_check_path  = "/health"
+  health_check_path  = "/"
 }
