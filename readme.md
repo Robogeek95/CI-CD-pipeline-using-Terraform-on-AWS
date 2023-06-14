@@ -1,4 +1,4 @@
-# Prospa Assessment
+# CI/CD pipeline using Terraform on AWS 
 ## Overview
 
 This project implements the infrastructure and CI/CD pipeline using Terraform on AWS. It deploys a scalable and secure architecture for hosting a web application and includes a robust CI/CD pipeline for automated building, testing, and deployment.
